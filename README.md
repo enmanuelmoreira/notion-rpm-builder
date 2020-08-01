@@ -2,22 +2,24 @@
 
 Build Notion packages for Redhat, using resources extracted from Notion's Windows or macOS packages.
 
+## Note: Testing on Fedora 32
+
 ## Prebuilt packages
 
-See [Releases](https://github.com/utkarshmalik211/notion-rpm-builder/releases)
+See [Releases](https://github.com/enmanuelmoreira/notion-rpm-builder/releases)
 
 ## Requirements
 
-1. Install Node.js, e.g. using NVM:
+1. Install Node.js, e.g. using dnf:
 
    ```sh
-   nvm install node
+   sudo dnf install nodejs
    ```
 
 2. Install `asar`, `electron-packager` and `electron-installer-debian`:
 
    ```sh
-   npm -g install asar electron-packager electron-installer-redhat
+   sudo npm -g install asar electron-packager electron-installer-redhat electron-installer-debian
    ```
 
 3. Install packages required for `7z`, `convert`, `fakeroot` and `dpkg`.
@@ -25,7 +27,7 @@ See [Releases](https://github.com/utkarshmalik211/notion-rpm-builder/releases)
    Using Redhat:
 
    ```sh
-   sudo yum install p7zip-plugins ImageMagick fakeroot
+   sudo dnf install p7zip-plugins ImageMagick fakeroot
    ```
 
    Or, using macOS:
@@ -37,7 +39,7 @@ See [Releases](https://github.com/utkarshmalik211/notion-rpm-builder/releases)
 4. Download the latest Notion Windows or macOS installer, as `notion.exe` or `notion.dmg` respectively, e.g. using wget:
 
    ```sh
-   wget 'https://desktop-release.notion-static.com/Notion%20Setup%202.0.6.exe' -O notion.exe
+   wget 'https://desktop-release.notion-static.com/Notion%20Setup%202.0.8.exe' -O notion.exe
    ```
 
 # Build
