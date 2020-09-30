@@ -2,7 +2,7 @@
 
 Build Notion packages for Redhat, using resources extracted from Notion's Windows or macOS packages.
 
-## Note: Testing on Fedora 32
+## Note: Tested on Fedora 32 and CentOS 8.2
 
 ## Prebuilt packages
 
