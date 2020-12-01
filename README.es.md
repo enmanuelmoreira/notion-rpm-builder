@@ -1,8 +1,8 @@
 # Notion RPM Builder
 
-Contruir paquete Notion para Redhat, utilizando los archivos desde el instalador de Notion para  Windows o del paquete para macOS.
+Construye un paquete rpm para Redhat, utilizando los archivos desde el instalador de Notion para Windows o del paquete para macOS.
 
-## Note: Probado en Fedora 32
+## Note: Probado en Fedora 33 / CentOS 8.2
 
 ## Paquete preconstruído
 
@@ -44,7 +44,7 @@ Ver [Releases](https://github.com/enmanuelmoreira/notion-rpm-builder/releases)
 
 # Build
 
-ejecutar el script:
+Ejecutar el script:
 
 ```sh
 ./build.sh <platform>
