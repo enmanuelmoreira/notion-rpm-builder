@@ -2,7 +2,7 @@
 
 Construye un paquete rpm para Redhat, utilizando los archivos desde el instalador de Notion para Windows o del paquete para macOS.
 
-## Note: Probado en Fedora 33 / CentOS 8.2
+## Nota: Probado en Fedora 32 / CentOS 8.2
 
 ## Paquete preconstruído
 
@@ -36,7 +36,7 @@ Ver [Releases](https://github.com/enmanuelmoreira/notion-rpm-builder/releases)
    brew install p7zip imagemagick fakeroot dpkg
    ```
 
-4. Descargar la versión más reciente del instalador de  Notion en Windows o macOS, como `notion.exe` o `notion.dmg` respectivamente, e.j. con wget:
+4. Descargar la versión más reciente del instalador de Notion en Windows o macOS, como `notion.exe` o `notion.dmg` respectivamente, e.j. con wget:
 
    ```sh
    wget 'https://desktop-release.notion-static.com/Notion%20Setup%202.0.8.exe' -O notion.exe
