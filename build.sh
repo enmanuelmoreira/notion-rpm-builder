@@ -1,30 +1,15 @@
 #!/bin/bash
 set -e
 
-ELECTRON_VERSION=6.1.12
+ELECTRON_VERSION=11.0.3
 NOTION_BINARY=notion.exe
-NOTION_DMG=notion.dmg
+PATH="node_modules/.bin:$PATH"
 
-if [[ $1 != windows && $1 != mac ]]; then
-  echo Please specify whether you would like to build a DEB package using \
-    Windows or macOS sources
-  echo Example: ./build.sh windows
-  exit 1
-fi
-
-# Check for Notion Windows installer
-if [ "$1" == windows ] && ! [ -f $NOTION_BINARY ]; then
+# Check for Notion installer
+if ! [ -f $NOTION_BINARY ]; then
   echo Notion installer missing!
   echo Please download Notion for Windows from https://www.notion.so/desktop \
     and place the installer in this directory as $NOTION_BINARY
-  exit 1
-fi
-
-# Check for Notion macOS installer
-if [ "$1" == mac ] && ! [ -f $NOTION_DMG ]; then
-  echo Notion installer missing!
-  echo Please download Notion for macOS from https://www.notion.so/desktop \
-    and place the installer in this directory as $NOTION_DMG
   exit 1
 fi
 
@@ -38,7 +23,7 @@ check-command() {
 
 commands=(
   node npm asar electron-packager electron-installer-debian electron-installer-redhat
-  7z convert fakeroot dnf
+  7z convert fakeroot dpkg g++ make
 )
 
 for command in "${commands[@]}"; do
@@ -48,32 +33,19 @@ done
 # Setup the build directory
 mkdir -p build
 
-if [ "$1" == windows ]; then
-  # Extract the Notion executable
-  if ! [ -f "build/notion/\$PLUGINSDIR/app-64.7z" ]; then
-    7z x $NOTION_BINARY -obuild/notion
-  fi
+# Extract the Notion executable
+if ! [ -f "build/notion/\$PLUGINSDIR/app-64.7z" ]; then
+  7z x $NOTION_BINARY -obuild/notion
+fi
 
-  # Extract the app bundle
-  if ! [ -f build/bundle/resources/app.asar ]; then
-    7z x "build/notion/\$PLUGINSDIR/app-64.7z" -obuild/bundle
-  fi
+# Extract the app bundle
+if ! [ -f build/bundle/resources/app.asar ]; then
+  7z x "build/notion/\$PLUGINSDIR/app-64.7z" -obuild/bundle
+fi
 
-  # Extract the app container
-  if ! [ -d build/app ]; then
-    asar extract build/bundle/resources/app.asar build/app
-  fi
-elif [ "$1" == mac ]; then
-  # Extract the Notion disk image
-  if ! [ -f 'build/notion/Notion Installer/Notion.app/Contents/Resources/app.asar' ]; then
-    7z x $NOTION_DMG -obuild/notion
-  fi
-
-  if ! [ -d build/app ]; then
-    asar extract \
-      'build/notion/Notion Installer/Notion.app/Contents/Resources/app.asar' \
-      build/app
-  fi
+# Extract the app container
+if ! [ -d build/app ]; then
+  asar extract build/bundle/resources/app.asar build/app
 fi
 
 # Install NPM dependencies
@@ -114,12 +86,12 @@ if ! [ -d build/dist ]; then
 fi
 
 # Create Debian package
-# electron-installer-debian \
-#   --src build/dist/app-linux-x64 \
-#   --dest out \
-#   --arch amd64 \
-#   --options.productName Notion \
-#   --options.icon build/dist/app-linux-x64/resources/app/icon.png
+#electron-installer-debian \
+#  --src build/dist/app-linux-x64 \
+#  --dest out \
+#  --arch amd64 \
+#  --options.productName Notion \
+#  --options.icon build/app/icon.png
 
 electron-installer-redhat \
   --src build/dist/app-linux-x64 \
