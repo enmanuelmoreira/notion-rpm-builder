@@ -2,7 +2,7 @@
 
 Construye un paquete rpm para Redhat, utilizando los archivos desde el instalador de Notion para Windows o del paquete para macOS.
 
-## Nota: Probado en Fedora 32 / CentOS 8.2
+## Nota: Probado en Fedora 33 / CentOS 8.2
 
 ## Paquete preconstruído
 
